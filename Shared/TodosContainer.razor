@@ -1,17 +1,18 @@
 ﻿@inject stateService.TodosManager Todos;
-
-<div class="flex justify-center  card_grid w-100 ">
-
-
+<div>@Todos.getValue().Count </div>
+<div class="w-100 d-grid justify-content-around gap-2 " style="grid-template-columns: 30% 30% 30%; ">
 
 
-    <div>@Todos.getValue().Count </div>
+
+
+ 
 
 
 
     @foreach (var todo in Todos.getValue())
     {
-            <TodoCard name=@todo.GetTitle()></TodoCard>
+        <TodoCard title=@todo.GetTitle() discription=@todo.GetDiscription()
+              todoId=@todo.GetId()></TodoCard>
     }
 
 </div>
@@ -21,11 +22,11 @@
 
 
 
+    protected override void OnInitialized()
+    {
+        Todos.OnStateChange += StateHasChanged;
 
- 
+    }
 
-    //void test () {
-    //    if (T)
-    //    Todos.OnStateChange?.invoke();
-    //}
+
 }

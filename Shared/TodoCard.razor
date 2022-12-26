@@ -1,8 +1,62 @@
-﻿<div class="border border-1 border-warning rounded ">
-    @name
-</div>
+﻿@inject stateService.TodosManager Todos;
+@inject stateService.InputStateManagment InputsHandler ;
+
+
+<ul class="border border-1 border-warning rounded list-unstyled px-3 py-1" style="background-color : @colorGenerator()">
+    <li>title : @title</li>
+    <li>discription :  @discription</li>
+
+    <li>id :  @todoId.ToString()</li>
+
+    <li>
+
+        <button class="btn btn-primary rounded text-white px-3 py-1 w-100" @onclick="()=> {handleEditBtn(todoId);}">edit</button>
+
+    </li>
+</ul>
 
 @code {
     [Parameter]
-    public string name { get; set; }
+    public string title { get; set; }
+
+    [Parameter]
+    public string discription { get; set; }
+    [Parameter]
+    public long todoId { get; set; }
+
+
+    private string colorGenerator()
+    {
+        char[] hexArr = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+
+        string hexColor = "#";
+        for (int i = 0; i <= 5; i++)
+        {
+            int number = new Random().Next(0, 15);
+            hexColor += hexArr[number];
+        }
+        return hexColor;
+
+
+    }
+
+
+    private void handleEditBtn(long id)
+    {
+        var findedTodo = Todos.getValue().Find(x => x.GetId() == id);
+
+        //Console.WriteLine("title is :{0} and discription is : {1} and the id is : {2}", findedTodo.GetTitle(), findedTodo.GetDiscription(), findedTodo.GetId());
+
+        Dictionary<string, string> CorrentValues = InputsHandler.GetValue();
+
+        CorrentValues["title"] = findedTodo.GetTitle();
+        CorrentValues["discription"] = findedTodo.GetDiscription();
+        CorrentValues["inEditMode"] = Boolean.TrueString;
+        CorrentValues["editId"] = findedTodo.GetId().ToString();
+
+
+
+        InputsHandler.setValue(CorrentValues);
+    }
 }

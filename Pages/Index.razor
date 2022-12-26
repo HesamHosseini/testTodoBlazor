@@ -7,47 +7,10 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="salmam" />
-
 <InputForm ></InputForm>
-
 <hr />
+<TodosContainer ></TodosContainer>
 
 
 
-
-@*<TodosContainer ></TodosContainer>*@
-
-<ul>
-    @foreach (var todo in Todos.getValue())
-    {
-        <li>
-            @todo.GetTitle()
-        </li>
-    }
-</ul>
-
-
-
-@code {
-
-    protected override bool ShouldRender()
-    {
-
-        return base.ShouldRender();
-    }
-
-    public void test()
-    {
-        if ()
-    }
-
-    protected override void OnInitialized()
-    {
-        Console.WriteLine("ah shit");
-
-
-    }
-
-   
-    }
 

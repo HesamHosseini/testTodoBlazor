@@ -13,9 +13,12 @@ namespace BlazorTodo.stateService
         {
             Value = new Dictionary<string, string>
             {
-                { "title", "" },
-                { "discription", "" }
-         
+                { "title", string.Empty },
+                { "discription", string.Empty },
+                {"inEditMode" , Boolean.FalseString },
+                {"editId" , string.Empty }
+
+
             };
         }
 

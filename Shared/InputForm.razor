@@ -8,7 +8,15 @@
     <input name="title" placeholder="title"  value="@inputHandlerService.GetValue()["title"]" @onchange='(e) => {handleChangeInput(e.Value , "title" );}' />
     <input name="discription"placeholder="discription" value="@inputHandlerService.GetValue()["discription"]" @onchange='(e) => {handleChangeInput(e.Value , "discription" );}' />
     
-    <button type="submit">submit</button>
+    <button type="submit">
+        @if (inputHandlerService.GetValue()["inEditMode"] == "true")
+        {
+           <span>edit</span>
+        }else
+        {
+            <span>add</span>
+        }
+        </button>
 </form>
 
 
@@ -17,13 +25,13 @@
 
 @code {
 
-      
 
 
-    protected override bool ShouldRender()
+
+    protected override void OnInitialized()
     {
-        Console.WriteLine("input form component should rerender !"+ base.ShouldRender());
-        return base.ShouldRender();
+        inputHandlerService.OnStateChange += StateHasChanged;
+        
     }
 
 
@@ -49,7 +57,6 @@
         var idGenerator = new IdGenerator(0);
 
         Dictionary<string, string> CorrentValues = inputHandlerService.GetValue();
-
 
 
 
