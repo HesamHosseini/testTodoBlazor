@@ -1,0 +1,89 @@
+﻿@inject stateService.InputStateManagment inputHandlerService;
+@inject stateService.TodosManager Todos;
+
+<h3>InputForm</h3>
+
+<form @onsubmit:preventDefault="true" @onsubmit="handleSubmit">
+
+    <input name="title" placeholder="title"  value="@inputHandlerService.GetValue()["title"]" @onchange='(e) => {handleChangeInput(e.Value , "title" );}' />
+    <input name="discription"placeholder="discription" value="@inputHandlerService.GetValue()["discription"]" @onchange='(e) => {handleChangeInput(e.Value , "discription" );}' />
+    
+    <button type="submit">submit</button>
+</form>
+
+
+
+
+
+@code {
+
+      
+
+
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine("input form component should rerender !"+ base.ShouldRender());
+        return base.ShouldRender();
+    }
+
+
+
+
+
+
+    void handleChangeInput(object newValue, string key)
+    {
+        Dictionary<string, string> Temp = inputHandlerService.GetValue();
+
+        Temp[key] = newValue.ToString();
+
+        inputHandlerService.setValue(Temp);
+    }
+
+
+
+    void handleSubmit()
+    {
+
+
+        var idGenerator = new IdGenerator(0);
+
+        Dictionary<string, string> CorrentValues = inputHandlerService.GetValue();
+
+
+
+
+
+        List<BlazorTodo.stateService.TodosManager.Todo> PervList = Todos.getValue();
+
+        PervList.Add(new BlazorTodo.stateService.TodosManager.Todo(CorrentValues["title"], CorrentValues["discription"], idGenerator.CreateId()));
+
+
+
+
+        Todos.setValue(PervList);
+        
+
+
+
+
+
+        Dictionary<string, string> temp = inputHandlerService.GetValue();
+        foreach (var item in temp)
+        {
+            var test = item.Key;
+            temp[test] = String.Empty ;
+
+
+        }
+
+
+
+        inputHandlerService.setValue(temp);
+
+       
+    }
+}
+
+
+

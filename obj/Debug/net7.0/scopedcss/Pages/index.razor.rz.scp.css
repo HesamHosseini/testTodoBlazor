@@ -1,0 +1,39 @@
+.flex[b-0cgboke97q] {
+    display :flex;
+
+    
+}
+
+.w-100[b-0cgboke97q] {
+    width : 100%;
+
+}
+
+
+.justify-center[b-0cgboke97q] {
+    justify-content : center ;
+}
+
+.items_center[b-0cgboke97q] {
+    align-items : center ;
+}
+
+.card_grid[b-0cgboke97q] {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+   
+    justify-content: space-around;
+    gap: 3%;
+    row-gap: 10px
+}
+
+@media (max-width: 640.98px) {
+
+    .card_grid[b-0cgboke97q] {
+            grid-template-columns: 100%;
+            
+    }
+    
+
+
+}

@@ -1,0 +1,39 @@
+﻿.flex {
+    display :flex;
+
+    
+}
+
+.w-100 {
+    width : 100%;
+
+}
+
+
+.justify-center {
+    justify-content : center ;
+}
+
+.items_center {
+    align-items : center ;
+}
+
+.card_grid {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+   
+    justify-content: space-around;
+    gap: 3%;
+    row-gap: 10px
+}
+
+@media (max-width: 640.98px) {
+
+    .card_grid {
+            grid-template-columns: 100%;
+            
+    }
+    
+
+
+}

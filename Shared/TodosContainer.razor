@@ -1,0 +1,31 @@
+﻿@inject stateService.TodosManager Todos;
+
+<div class="flex justify-center  card_grid w-100 ">
+
+
+
+
+    <div>@Todos.getValue().Count </div>
+
+
+
+    @foreach (var todo in Todos.getValue())
+    {
+            <TodoCard name=@todo.GetTitle()></TodoCard>
+    }
+
+</div>
+
+
+@code {
+
+
+
+
+ 
+
+    //void test () {
+    //    if (T)
+    //    Todos.OnStateChange?.invoke();
+    //}
+}
