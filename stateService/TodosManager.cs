@@ -10,18 +10,39 @@ namespace BlazorTodo.stateService
             string title;
             string discription;
             long id;
+            string bgColor;
 
-            public Todo(string title , string discription , long id )
+            public Todo(string title , string discription , long id , string bgColor )
             {
                 this.title = title;
                 this.discription = discription;
                 this.id = id;
+                this.bgColor = bgColor;
             }
+
+
+            // getters 
 
             public String GetTitle() { return title; }
             public string GetDiscription() { return discription; }
 
             public long GetId() { return id; }
+
+            public string GetBgColor () { return bgColor; }
+
+
+
+            // setters 
+
+            public void setTitle(string newTitle)
+            {
+                title = newTitle;
+            }
+
+            public void setDiscription(string newDiscription)
+            {
+                discription = newDiscription;
+            }
         }
 
 

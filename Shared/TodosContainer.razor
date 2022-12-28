@@ -1,5 +1,5 @@
 ﻿@inject stateService.TodosManager Todos;
-<div>@Todos.getValue().Count </div>
+<div>Todos Genrated : @Todos.getValue().Count </div>
 <div class="w-100 d-grid justify-content-around gap-2 " style="grid-template-columns: 30% 30% 30%; ">
 
 
@@ -12,7 +12,7 @@
     @foreach (var todo in Todos.getValue())
     {
         <TodoCard title=@todo.GetTitle() discription=@todo.GetDiscription()
-              todoId=@todo.GetId()></TodoCard>
+              todoId=@todo.GetId() bgColor=@todo.GetBgColor() ></TodoCard>
     }
 
 </div>

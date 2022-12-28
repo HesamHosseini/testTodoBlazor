@@ -3,20 +3,24 @@
 
 <h3>InputForm</h3>
 
-<form @onsubmit:preventDefault="true" @onsubmit="handleSubmit">
+<form @onsubmit:preventDefault="true" @onsubmit="handleSubmit" class="d-flex items_center justify-content-around w-100 ">
 
-    <input name="title" placeholder="title"  value="@inputHandlerService.GetValue()["title"]" @onchange='(e) => {handleChangeInput(e.Value , "title" );}' />
-    <input name="discription"placeholder="discription" value="@inputHandlerService.GetValue()["discription"]" @onchange='(e) => {handleChangeInput(e.Value , "discription" );}' />
-    
-    <button type="submit">
-        @if (inputHandlerService.GetValue()["inEditMode"] == "true")
+    <input class="border rounded p-2" name="title" placeholder="title" value="@inputHandlerService.GetValue()["title"]" @onchange='(e) => {handleChangeInput(e.Value , "title" );}' />
+    <input class="border rounded p-2 " name="discription" placeholder="discription" value="@inputHandlerService.GetValue()["discription"]" @onchange='(e) => {handleChangeInput(e.Value , "discription" );}' />
+
+
+
+
+    <button type="submit" class="btn btn-primary border-0 w-25">
+        @if (inputHandlerService.GetValue()["inEditMode"] == "True")
         {
-           <span>edit</span>
-        }else
+            <span>edit</span>
+        }
+        else
         {
             <span>add</span>
         }
-        </button>
+    </button>
 </form>
 
 
@@ -25,13 +29,29 @@
 
 @code {
 
+    private string colorGenerator()
+    {
+        char[] hexArr = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+
+        string hexColor = "#";
+        for (int i = 0; i <= 5; i++)
+        {
+            int number = new Random().Next(0, 15);
+            hexColor += hexArr[number];
+        }
+        return hexColor;
+
+
+    }
+
 
 
 
     protected override void OnInitialized()
     {
         inputHandlerService.OnStateChange += StateHasChanged;
-        
+
     }
 
 
@@ -54,43 +74,67 @@
     {
 
 
-        var idGenerator = new IdGenerator(0);
+
+
 
         Dictionary<string, string> CorrentValues = inputHandlerService.GetValue();
-
-
-
-
         List<BlazorTodo.stateService.TodosManager.Todo> PervList = Todos.getValue();
 
-        PervList.Add(new BlazorTodo.stateService.TodosManager.Todo(CorrentValues["title"], CorrentValues["discription"], idGenerator.CreateId()));
-
-
-
-
-        Todos.setValue(PervList);
-        
-
-
-
-
-
-        Dictionary<string, string> temp = inputHandlerService.GetValue();
-        foreach (var item in temp)
+        if (CorrentValues["discription"].Length == 0 || CorrentValues["title"].Length == 0)
         {
-            var test = item.Key;
-            temp[test] = String.Empty ;
-
-
+            return;
         }
+        else
+        {
+
+            if (CorrentValues["inEditMode"] == "True")
+            {
 
 
+                var test = PervList.Find(x => x.GetId().ToString() == inputHandlerService.GetValue()["editId"]);
 
-        inputHandlerService.setValue(temp);
+                test.setTitle(CorrentValues["title"]);
+                test.setDiscription(CorrentValues["discription"]);
 
-       
+                Todos.setValue(PervList);
+
+                foreach (var item in CorrentValues)
+                {
+                    if (item.Key == "inEditMode")
+                    {
+                        CorrentValues[item.Key] = Boolean.FalseString;
+                    }
+                    else
+                    {
+                        CorrentValues[item.Key] = String.Empty;
+                    }
+                }
+                inputHandlerService.setValue(CorrentValues);
+
+            }
+            else
+            {
+                var idGenerator = new IdGenerator(0);
+
+
+                PervList.Add(new BlazorTodo.stateService.TodosManager.Todo(CorrentValues["title"], CorrentValues["discription"], idGenerator.CreateId(), colorGenerator()));
+                Todos.setValue(PervList);
+
+                foreach (var item in CorrentValues)
+                {
+                    if (item.Key == "inEditMode")
+                    {
+                        CorrentValues[item.Key] = Boolean.FalseString;
+                    }
+                    else
+                    {
+                        CorrentValues[item.Key] = String.Empty;
+                    }
+                }
+                inputHandlerService.setValue(CorrentValues);
+            }
+        }
     }
 }
-
 
 
